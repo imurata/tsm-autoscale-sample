@@ -15,7 +15,7 @@ spec:
     enabled: true
     instances:
       min: 1
-      max: 5
+      max: 4
       default: 3
       stepsDown: 1
       stepsUp: 1
