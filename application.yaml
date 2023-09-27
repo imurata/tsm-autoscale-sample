@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crd-test
+  namespace: argocd
+spec:
+  destination:
+    namespace: dev-crd-test
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: manifest/
+    repoURL: https://github.com/imurata/tsm-autoscale-sample.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    name: nginx
+    jsonPointers:
+    - /spec/replicas
