@@ -1,0 +1,29 @@
+apiVersion: autoscaling.tsm.tanzu.vmware.com/v1alpha1
+kind: Definition
+metadata:
+  name: nginx-asd
+  labels: 
+    app: nginx-asd
+spec:
+  scaleTargetRef:
+    kubernetes:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  scaleRule:
+    mode: EFFICIENCY
+    enabled: true
+    instances:
+      min: 1
+      max: 5
+      default: 3
+      stepsDown: 1
+      stepsUp: 1
+    trigger:
+      gracePeriodSeconds: 60
+      metric:
+        name: CPUUsageMillicores
+        scaleUp: 200
+        scaleDown: 80
+        windowSeconds: 60
+
